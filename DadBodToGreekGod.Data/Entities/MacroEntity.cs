@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace DadBodToGreekGod.Data.Entities
 {
@@ -8,8 +10,7 @@ namespace DadBodToGreekGod.Data.Entities
         public int Id { get; set; } 
 
         [Required]
-        public int OwnerId { get; set; }
-        public UserEntity Owner { get; set; } = null!;
+        public int UserId { get; set;}
 
         [Required]
         public int Calories{ get; set; }

@@ -17,9 +17,8 @@ namespace DadBodToGreekGod.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<UserEntity>().ToTable("Users");
             modelBuilder.Entity<MacroEntity>()
-                .HasOne(n => n.Owner)
-                .WithMany(u => u.Macros)
-                .HasForeignKey(n => n.OwnerId);
+                .HasIndex(e => e.UserId)
+                .IsUnique();
         }
     }
 }

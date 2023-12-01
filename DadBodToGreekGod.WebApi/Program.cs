@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
-// var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -87,16 +87,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
 
-// builder.Services.AddCors(options =>
-// {
-//     options.AddPolicy(name: MyAllowSpecificOrigins,
-//                       policy  =>
-//                       {
-//                           policy.WithOrigins("https://dndwebapi.azurewebsites.net", "http://127.0.0.1:5500")
-//                                .AllowAnyHeader()
-//                                                   .AllowAnyMethod();
-//                       });
-// });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy  =>
+                      {
+                          policy.WithOrigins("https://localhost:5173/", "http://127.0.0.1:5500")
+                               .AllowAnyHeader()
+                                                  .AllowAnyMethod();
+                      });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

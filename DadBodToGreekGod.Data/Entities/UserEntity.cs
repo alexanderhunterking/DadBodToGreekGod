@@ -13,6 +13,5 @@ namespace DadBodToGreekGod.Data.Entities
 
         [Required]
         public DateTime DateCreated { get; set; }
-        public List<MacroEntity> Macros { get; set; } = new List<MacroEntity>();
     }
 }

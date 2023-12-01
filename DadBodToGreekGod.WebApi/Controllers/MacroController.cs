@@ -22,24 +22,44 @@ namespace DadBodToGreekGod.WebApi.Controllers
             _macroService = macroService;
         }
 
+        // [HttpPost]
+        // public async Task<IActionResult> CreateMacro([FromBody] MacroCreate request)
+        // {
+        //     if(!ModelState.IsValid)
+        //     {
+        //         return BadRequest(ModelState);
+        //     }
+
+        //     var response = await _macroService.CreateMacroAsync(request);
+        //     if (response is not null)
+        //     {
+        //         return Ok(response);
+        //     }
+
+        //     return BadRequest(new TextResponse("Could not create macro."));
+        // }
+
         [HttpPost]
         public async Task<IActionResult> CreateMacro([FromBody] MacroCreate request)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                 return BadRequest(ModelState);
             }
 
             var response = await _macroService.CreateMacroAsync(request);
+    
             if (response is not null)
             {
+                // MacroEntity created successfully
                 return Ok(response);
             }
-
-            return BadRequest(new TextResponse("Could not create macro."));
+            else
+            {
+                // User has already created a MacroEntity, handle accordingly
+                return BadRequest(new TextResponse("User has already created a macro."));
+            }
         }
-        
-       
 
         [HttpGet("{user:int}")]
         public async Task<IActionResult> GetMacroById([FromRoute] int userId)
