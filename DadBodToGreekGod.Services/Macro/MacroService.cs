@@ -23,7 +23,7 @@ namespace DadBodToGreekGod.Services.Macro
             var userIdClaim = userManager.GetUserId(currentUser);
             var hasValidId = int.TryParse(userIdClaim, out _userId);
 
-            if(hasValidId == false)
+            if (hasValidId == false)
             {
                 throw new Exception("Attempted to build MacroService without Id Claim.");
             }
@@ -77,47 +77,47 @@ namespace DadBodToGreekGod.Services.Macro
         //     return response;
         // }
 
-    public async Task<MacroDetail?> CreateMacroAsync(MacroCreate request)
-{
-    // Check if the user has already created a MacroEntity
-    var existingMacro = await _dbContext.Macros
-        .FirstOrDefaultAsync(m => m.UserId == _userId);
+        public async Task<MacroDetail?> CreateMacroAsync(MacroCreate request)
+        {
+            // Check if the user has already created a MacroEntity
+            var existingMacro = await _dbContext.Macros
+                .FirstOrDefaultAsync(m => m.UserId == _userId);
 
-    if (existingMacro != null)
-    {
-        // User has already created a MacroEntity, handle accordingly (e.g., return null, throw an exception)
-        return null;
-    }
+            if (existingMacro != null)
+            {
+                // User has already created a MacroEntity, handle accordingly (e.g., return null, throw an exception)
+                return null;
+            }
 
-    // Proceed with creating a new MacroEntity
-    MacroEntity entity = new()
-    {
-        Calories = request.Calories,
-        Protein = request.Protein,
-        Carbs = request.Carbs,
-        Fats = request.Fats,
-        UserId = _userId
-    };
+            // Proceed with creating a new MacroEntity
+            MacroEntity entity = new()
+            {
+                Calories = request.Calories,
+                Protein = request.Protein,
+                Carbs = request.Carbs,
+                Fats = request.Fats,
+                UserId = _userId
+            };
 
-    _dbContext.Macros.Add(entity);
-    var numberOfChanges = await _dbContext.SaveChangesAsync();
+            _dbContext.Macros.Add(entity);
+            var numberOfChanges = await _dbContext.SaveChangesAsync();
 
-    if (numberOfChanges != 1)
-    {
-        return null;
-    }
+            if (numberOfChanges != 1)
+            {
+                return null;
+            }
 
-    MacroDetail response = new()
-    {
-        Id = entity.Id,
-        Calories = entity.Calories,
-        Protein = entity.Protein,
-        Carbs = entity.Carbs,
-        Fats = entity.Fats
-    };
+            MacroDetail response = new()
+            {
+                Id = entity.Id,
+                Calories = entity.Calories,
+                Protein = entity.Protein,
+                Carbs = entity.Carbs,
+                Fats = entity.Fats
+            };
 
-    return response;
-}
+            return response;
+        }
 
 
         public async Task<MacroDetail?> GetMacroByIdAsync(int userId)
@@ -139,20 +139,27 @@ namespace DadBodToGreekGod.Services.Macro
 
         public async Task<bool> UpdateMacroAsync(MacroUpdate request)
         {
-            MacroEntity? entity = await _dbContext.Macros.FindAsync(request.Id);
+            // Find the entity based on UserId
+            MacroEntity? entity = await _dbContext.Macros
+                .Where(m => m.UserId == _userId && m.Id == request.Id)
+                .FirstOrDefaultAsync();
 
-            if(entity?.UserId != _userId)
+            if (entity == null)
             {
+                // Entity not found or userId doesn't match
                 return false;
             }
 
+            // Update the properties
             entity.Calories = request.Calories;
             entity.Protein = request.Protein;
             entity.Carbs = request.Carbs;
             entity.Fats = request.Fats;
 
+            // Save changes
             int numberOfChanges = await _dbContext.SaveChangesAsync();
-            
+
+            // Check if exactly one change was made
             return numberOfChanges == 1;
         }
 
@@ -160,7 +167,7 @@ namespace DadBodToGreekGod.Services.Macro
         {
             var macroEntity = await _dbContext.Macros.FindAsync(macroId);
 
-            if(macroEntity?.UserId != _userId)
+            if (macroEntity?.UserId != _userId)
                 return false;
 
             _dbContext.Macros.Remove(macroEntity);

@@ -55,7 +55,8 @@ namespace DadBodToGreekGod.Services.Token
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             TokenResponse response = new TokenResponse()
-            {
+            {   
+                Id = entity.Id,
                 Token = tokenHandler.WriteToken(token),
                 IssuedAt = token.ValidFrom,
                 Expires = token.ValidTo

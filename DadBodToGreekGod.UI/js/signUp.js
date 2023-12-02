@@ -39,8 +39,7 @@
           .then(function (status) {
             if (status == 200) {
               alert("User was registred!");
-              document.getElementById("loginButton").click();
-              newUserMacro();
+              window.location.replace("../pages/login.html")
             }
             if (status >= 400) {
               alert("An error occured. Please try again.");
@@ -52,6 +51,3 @@
   });
 })();
 
-function newUserMacro(){
-  
-}

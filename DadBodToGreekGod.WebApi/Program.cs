@@ -85,14 +85,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy  =>
                       {
-                          policy.WithOrigins("https://localhost:5173/", "http://127.0.0.1:5500")
+                          policy.WithOrigins("https://localhost:5173", "127.0.0.1:5500")
                                .AllowAnyHeader()
                                                   .AllowAnyMethod();
                       });
@@ -105,6 +103,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpsRedirection();
 
