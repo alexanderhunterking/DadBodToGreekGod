@@ -31,51 +31,6 @@ namespace DadBodToGreekGod.Services.Macro
             _dbContext = dbContext;
         }
 
-        // public MacroService(IHttpContextAccessor httpContextAccessor, ApplicationDbContext dbContext, IMapper mapper)
-        // {
-        //     var userClaims = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
-
-        //     var value = userClaims?.FindFirst("id")?.Value;
-
-        //     var validId = int.TryParse(value, out _userId);
-
-        //     if (!validId)
-        //         throw new Exception("Attempted to build MacroService without User Id claim.");
-        //     _dbContext = dbContext;
-        //     _mapper = mapper;
-        // }
-
-        // public async Task<MacroDetail?> CreateMacroAsync(MacroCreate request)
-        // {
-        //     MacroEntity entity = new()
-        //     {
-        //         Calories = request.Calories,
-        //         Protein = request.Protein,
-        //         Carbs = request.Carbs,
-        //         Fats = request.Fats,
-        //         UserId = _userId
-        //     };
-
-        //     _dbContext.Macros.Add(entity);
-        //     var numberOfChanges = await _dbContext.SaveChangesAsync();
-
-        //     if(numberOfChanges != 1)
-        //     {
-        //         return null;
-        //     }
-
-        //     MacroDetail response = new()
-        //     {
-        //         Id = entity.Id,
-        //         Calories = entity.Calories,
-        //         Protein = entity.Protein,
-        //         Carbs = entity.Carbs,
-        //         Fats = entity.Fats
-
-        //     };
-
-        //     return response;
-        // }
 
         public async Task<MacroDetail?> CreateMacroAsync(MacroCreate request)
         {
@@ -135,36 +90,8 @@ namespace DadBodToGreekGod.Services.Macro
             };
         }
 
-
-
-        // public async Task<bool> UpdateMacroAsync(MacroUpdate request)
-        // {
-        //     // Find the entity based on UserId
-        //     MacroEntity? entity = await _dbContext.Macros
-        //         .Where(m => m.UserId == _userId && m.Id == request.UserId)
-        //         .FirstOrDefaultAsync();
-
-        //     if (entity == null)
-        //     {
-        //         // Entity not found or userId doesn't match
-        //         return false;
-        //     }
-
-        //     // Update the properties
-        //     entity.Calories = request.Calories;
-        //     entity.Protein = request.Protein;
-        //     entity.Carbs = request.Carbs;
-        //     entity.Fats = request.Fats;
-
-        //     // Save changes
-        //     int numberOfChanges = await _dbContext.SaveChangesAsync();
-
-        //     // Check if exactly one change was made
-        //     return numberOfChanges == 1;
-        // }
        public async Task<bool> UpdateMacroAsync(MacroUpdate request, int userId)
     {
-        // Your existing logic to find and update the MacroEntity for the given userId
         MacroEntity? entity = await _dbContext.Macros
             .Where(m => m.UserId == userId)
             .FirstOrDefaultAsync();
@@ -175,13 +102,11 @@ namespace DadBodToGreekGod.Services.Macro
             return false;
         }
 
-        // Update the properties
         entity.Calories = request.Calories;
         entity.Protein = request.Protein;
         entity.Carbs = request.Carbs;
         entity.Fats = request.Fats;
 
-        // Save changes
         int numberOfChanges = await _dbContext.SaveChangesAsync();
 
         // Check if exactly one change was made
