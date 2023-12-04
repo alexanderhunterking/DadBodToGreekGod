@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using DadBodToGreekGod.Services.Calendar;
 using DadBodToGreekGod.Services.Ingredient;
+using DadBodToGreekGod.Services.Meal;
 
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -24,6 +25,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IMacroService, MacroService>();
 builder.Services.AddScoped<ICalendarService, CalendarService>();
 builder.Services.AddScoped<IIngredientService, IngredientService>();
+builder.Services.AddScoped<IMealService, MealService>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
