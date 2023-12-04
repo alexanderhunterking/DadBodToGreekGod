@@ -7,7 +7,7 @@ using DadBodToGreekGod.Data.Entities;
 
 namespace DadBodToGreekGod.Models.UserMealAssignment
 {
-    public class CreateUserMealAssignmentModel
+    public class AssignMealToUserModel
     {
         [Required]
         public int UserId { get; set; }

@@ -1,85 +1,68 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using DadBodToGreekGod.Data.Entities;
-using Microsoft.EntityFrameworkCore;
 using DadBodToGreekGod.Models.MealIngredient;
 using DadBodToGreekGod.Services.MealIngredient;
-using DadBodToGreekGod.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace DadBodToGreekGod.WebApi.Controllers
 {
-    public class MealIngredientService : IMealIngredientService
+    [Authorize]
+    [ApiController]
+    [Route("api/mealingredients")]
+    public class MealIngredientController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IMealIngredientService _mealIngredientService;
 
-        public MealIngredientService(ApplicationDbContext context)
+        public MealIngredientController(IMealIngredientService mealIngredientService)
         {
-            _context = context;
+            _mealIngredientService = mealIngredientService;
         }
 
-        public async Task<int> AddIngredientToMealAsync(AddIngredientToMealModel addModel)
+        [HttpPost]
+        public async Task<IActionResult> AddIngredientToMeal([FromBody] AddIngredientToMealModel addModel)
         {
-            var mealIngredientEntity = new MealIngredientEntity
+            if (!ModelState.IsValid)
             {
-                MealId = addModel.MealId,
-                IngredientId = addModel.IngredientId,
-                Quantity = addModel.Quantity
-                // Add other properties as needed
-            };
-
-            _context.MealIngredients.Add(mealIngredientEntity);
-            await _context.SaveChangesAsync();
-
-            return mealIngredientEntity.MealIngredientId;
-        }
-
-        public async Task<List<MealIngredientListItemModel>> GetMealIngredientsAsync(int mealId)
-        {
-            var mealIngredients = await _context.MealIngredients
-                .Include(mi => mi.Ingredient)
-                .Where(mi => mi.MealId == mealId)
-                .Select(mi => new MealIngredientListItemModel
-                {
-                    MealIngredientId = mi.MealIngredientId,
-                    IngredientId = mi.IngredientId,
-                    IngredientName = mi.Ingredient.Name,
-                    Quantity = mi.Quantity
-                    // Add other properties as needed
-                })
-                .ToListAsync();
-
-            return mealIngredients;
-        }
-
-        public async Task UpdateMealIngredientAsync(int mealIngredientId, UpdateMealIngredientModel updateModel)
-        {
-            var mealIngredientEntity = await _context.MealIngredients.FindAsync(mealIngredientId);
-
-            if (mealIngredientEntity == null)
-            {
-                // Handle not found
-                return;
+                return BadRequest(ModelState);
             }
 
-            mealIngredientEntity.Quantity = updateModel.Quantity;
-            // Update other properties as needed
+            var mealIngredientId = await _mealIngredientService.AddIngredientToMealAsync(addModel);
 
-            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(MealIngredientDetailsModel), new { mealIngredientId }, null);
         }
 
-        public async Task RemoveIngredientFromMealAsync(int mealIngredientId)
+        [HttpGet("meal/{mealId}")]
+        public async Task<IActionResult> GetMealIngredients(int mealId)
         {
-            var mealIngredientEntity = await _context.MealIngredients.FindAsync(mealIngredientId);
+            var mealIngredients = await _mealIngredientService.GetMealIngredientsAsync(mealId);
 
-            if (mealIngredientEntity == null)
+            return Ok(mealIngredients);
+        }
+
+        [HttpPut("{mealIngredientId}")]
+        public async Task<IActionResult> UpdateMealIngredient(int mealIngredientId, [FromBody] UpdateMealIngredientModel updateModel)
+        {
+            if (!ModelState.IsValid)
             {
-                // Handle not found
-                return;
+                return BadRequest(ModelState);
             }
 
-            _context.MealIngredients.Remove(mealIngredientEntity);
-            await _context.SaveChangesAsync();
+            await _mealIngredientService.UpdateMealIngredientAsync(mealIngredientId, updateModel);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{mealIngredientId}")]
+        public async Task<IActionResult> RemoveIngredientFromMeal(int mealIngredientId)
+        {
+            await _mealIngredientService.RemoveIngredientFromMealAsync(mealIngredientId);
+
+            return NoContent();
         }
     }
 }

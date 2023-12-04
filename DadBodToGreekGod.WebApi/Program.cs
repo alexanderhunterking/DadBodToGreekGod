@@ -12,6 +12,8 @@ using Microsoft.OpenApi.Models;
 using DadBodToGreekGod.Services.Calendar;
 using DadBodToGreekGod.Services.Ingredient;
 using DadBodToGreekGod.Services.Meal;
+using DadBodToGreekGod.Services.MealIngredient;
+using DadBodToGreekGod.Services.UserMealAssignment;
 
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -26,7 +28,8 @@ builder.Services.AddScoped<IMacroService, MacroService>();
 builder.Services.AddScoped<ICalendarService, CalendarService>();
 builder.Services.AddScoped<IIngredientService, IngredientService>();
 builder.Services.AddScoped<IMealService, MealService>();
-builder.Services.AddScoped<IMealService, MealService>();
+builder.Services.AddScoped<IMealIngredientService, MealIngredientService>();
+builder.Services.AddScoped<IUserMealAssignmentService, UserMealAssignmentService>();
 
 
 builder.Services.AddHttpContextAccessor();
