@@ -31,5 +31,7 @@ namespace DadBodToGreekGod.Data.Entities
     public CalendarEntity Calendar { get; set; }
 
     public List<MealIngredientEntity> MealIngredients { get; set; }
+    
+    public List<UserMealAssignmentEntity> UserMealAssignments { get; set; }
     }
 }

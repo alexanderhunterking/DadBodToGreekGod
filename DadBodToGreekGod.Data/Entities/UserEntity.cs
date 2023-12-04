@@ -13,5 +13,6 @@ namespace DadBodToGreekGod.Data.Entities
 
         [Required]
         public DateTime DateCreated { get; set; }
+        public List<UserMealAssignmentEntity> UserMealAssignments { get; set; }
     }
 }
