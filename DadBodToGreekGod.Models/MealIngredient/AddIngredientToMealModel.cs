@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DadBodToGreekGod.Models.MealIngredient
 {
-    public class CreateMealIngredientModel
+    public class AddIngredientToMealModel
     {
          [Required]
     public int MealId { get; set; }

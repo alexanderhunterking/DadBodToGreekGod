@@ -26,6 +26,8 @@ builder.Services.AddScoped<IMacroService, MacroService>();
 builder.Services.AddScoped<ICalendarService, CalendarService>();
 builder.Services.AddScoped<IIngredientService, IngredientService>();
 builder.Services.AddScoped<IMealService, MealService>();
+builder.Services.AddScoped<IMealService, MealService>();
+
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
