@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using DadBodToGreekGod.Services.Calendar;
+using DadBodToGreekGod.Services.Ingredient;
 
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -22,6 +23,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IMacroService, MacroService>();
 builder.Services.AddScoped<ICalendarService, CalendarService>();
+builder.Services.AddScoped<IIngredientService, IngredientService>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
