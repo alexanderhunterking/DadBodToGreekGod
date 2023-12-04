@@ -14,6 +14,7 @@ using DadBodToGreekGod.Services.Ingredient;
 using DadBodToGreekGod.Services.Meal;
 using DadBodToGreekGod.Services.MealIngredient;
 using DadBodToGreekGod.Services.UserMealAssignment;
+using DadBodToGreekGod.Services.ShoppingList;
 
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -28,6 +29,7 @@ builder.Services.AddScoped<IMacroService, MacroService>();
 builder.Services.AddScoped<ICalendarService, CalendarService>();
 builder.Services.AddScoped<IIngredientService, IngredientService>();
 builder.Services.AddScoped<IMealService, MealService>();
+builder.Services.AddScoped<IShoppingListService, ShoppingListService>();
 builder.Services.AddScoped<IMealIngredientService, MealIngredientService>();
 builder.Services.AddScoped<IUserMealAssignmentService, UserMealAssignmentService>();
 
