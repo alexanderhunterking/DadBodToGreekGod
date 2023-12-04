@@ -21,6 +21,8 @@ if(localStorage.authToken){
     loginMacroInitialCreate();
 };
 
+
+
 function loginMacroInitialCreate() {
   fetch("https://localhost:7265/api/Macro", {
     method: "POST",
@@ -52,5 +54,5 @@ function loginMacroInitialCreate() {
   };
   
   function returningUser(){
-    alert("Returning user, welcome back!")
+
   };

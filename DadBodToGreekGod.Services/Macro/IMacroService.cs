@@ -6,7 +6,7 @@ namespace DadBodToGreekGod.Services.Macro
     {
         Task<MacroDetail?> CreateMacroAsync(MacroCreate request);
         Task<MacroDetail?> GetMacroByIdAsync(int userId);
-        Task<bool> UpdateMacroAsync(MacroUpdate request);
+         Task<bool> UpdateMacroAsync(MacroUpdate request, int userId);
         Task<bool> DeleteMacroAsync(int macroId);
     }
 }

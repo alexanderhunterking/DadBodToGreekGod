@@ -4,8 +4,6 @@ namespace DadBodToGreekGod.Models.Macro
 {
     public class MacroUpdate
     {
-        [Required]
-        public int Id { get; set; }
         
         [Required]
         

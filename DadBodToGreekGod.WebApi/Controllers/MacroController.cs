@@ -8,6 +8,7 @@ using DadBodToGreekGod.Models.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace DadBodToGreekGod.WebApi.Controllers
 {
@@ -44,11 +45,11 @@ namespace DadBodToGreekGod.WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                 return BadRequest(ModelState);
+                return BadRequest(ModelState);
             }
 
             var response = await _macroService.CreateMacroAsync(request);
-    
+
             if (response is not null)
             {
                 // MacroEntity created successfully
@@ -65,22 +66,45 @@ namespace DadBodToGreekGod.WebApi.Controllers
         public async Task<IActionResult> GetMacroById([FromRoute] int userId)
         {
             MacroDetail? detail = await _macroService.GetMacroByIdAsync(userId);
-            return detail is not null 
+            return detail is not null
             ? Ok(detail)
             : NotFound();
         }
 
+        // [HttpPut]
+        // public async Task<IActionResult> UpdateMacroById([FromBody] MacroUpdate request)
+        // {
+        //     if(!ModelState.IsValid)
+        //     {
+        //         return BadRequest(ModelState);
+        //     }
+
+        //     return await _macroService.UpdateMacroAsync(request)
+        //         ? Ok("Macro updated successfully.")
+        //         : BadRequest("Macro could not be found.");
+        // }
+
         [HttpPut]
-        public async Task<IActionResult> UpdateMacroById([FromBody] MacroUpdate request)
+        public async Task<IActionResult> UpdateMacro([FromBody] MacroUpdate request)
         {
-            if(!ModelState.IsValid)
+            // Access UserId from the authentication token claims
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            return await _macroService.UpdateMacroAsync(request)
-                ? Ok("Macro updated successfully.")
-                : BadRequest("Macro could not be found.");
+            var response = await _macroService.UpdateMacroAsync(request, userId);
+
+            if (response)
+            {
+                return Ok(new TextResponse("MacroEntity updated successfully."));
+            }
+            else
+            {
+                return NotFound(); // or handle unauthorized or MacroEntity not found accordingly
+            }
         }
 
         //!Delete api/Macro/5

@@ -104,7 +104,7 @@ function calculateCalories() {
       fat: Math.round((calories - (protein * 4)) * 0.3 / 9) // Adjust for protein calories
     };
 
-    
+    console.log(JSON.stringify(results, null, 2))
     
     fetch("https://localhost:7265/api/Macro", {
         method: "PUT",

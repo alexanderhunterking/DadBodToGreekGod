@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace DadBodToGreekGod.Services.Token
 {
     public class TokenService : ITokenService
-    {   
+    {
         private readonly IConfiguration _configuration;
         private readonly UserManager<UserEntity> _userManager;
 
@@ -23,8 +23,8 @@ namespace DadBodToGreekGod.Services.Token
         public async Task<TokenResponse?> GetTokenAsync(TokenRequest model)
         {
             UserEntity? entity = await GetValidUserAsync(model);
-            if(entity is null )
-            { 
+            if (entity is null)
+            {
                 return null;
             };
 
@@ -34,28 +34,32 @@ namespace DadBodToGreekGod.Services.Token
         private async Task<UserEntity?> GetValidUserAsync(TokenRequest model)
         {
             var userEntity = await _userManager.FindByNameAsync(model.UserName);
-            if(userEntity is null)
+            if (userEntity is null)
             {
                 return null;
             }
             var isValidPassword = await _userManager.CheckPasswordAsync(userEntity, model.Password);
-            if(isValidPassword == false)
+            if (isValidPassword == false)
             {
-                return null; 
+                return null;
             }
-            return userEntity; 
+            return userEntity;
         }
 
         private async Task<TokenResponse> GenerateTokenAsync(UserEntity entity)
         {
             List<Claim> claims = await GetUserClaimsAsync(entity);
+
+            // Add UserId claim
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, entity.Id.ToString()));
+
             SecurityTokenDescriptor tokenDescriptor = GetTokenDescriptor(claims);
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             TokenResponse response = new TokenResponse()
-            {   
+            {
                 Id = entity.Id,
                 Token = tokenHandler.WriteToken(token),
                 IssuedAt = token.ValidFrom,
@@ -75,7 +79,7 @@ namespace DadBodToGreekGod.Services.Token
             };
 
             var roles = await _userManager.GetRolesAsync(entity);
-            foreach(var role in roles)
+            foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
@@ -97,7 +101,7 @@ namespace DadBodToGreekGod.Services.Token
                 IssuedAt = DateTime.UtcNow,
                 Expires = DateTime.UtcNow.AddDays(14),
                 SigningCredentials = signingCredentials
-            }; 
+            };
 
             return tokenDescriptor;
         }
