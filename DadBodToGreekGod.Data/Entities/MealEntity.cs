@@ -27,9 +27,6 @@ namespace DadBodToGreekGod.Data.Entities
     [ForeignKey("UserId")]
     public UserEntity User { get; set; }
 
-    [ForeignKey("CalendarId")]
-    public CalendarEntity Calendar { get; set; }
-
     public List<MealIngredientEntity> MealIngredients { get; set; }
     
     public List<UserMealAssignmentEntity> UserMealAssignments { get; set; }

@@ -64,7 +64,7 @@ namespace DadBodToGreekGod.Services.Macro
 
             MacroDetail response = new()
             {
-                Id = entity.Id,
+                UserId = entity.UserId,
                 Calories = entity.Calories,
                 Protein = entity.Protein,
                 Carbs = entity.Carbs,
@@ -75,43 +75,45 @@ namespace DadBodToGreekGod.Services.Macro
         }
 
 
-        public async Task<MacroDetail?> GetMacroByIdAsync(int userId)
+        public async Task<IEnumerable<MacroDetail>> GetMacroByIdAsync()
+        {
+            List<MacroDetail> macros = await _dbContext.Macros
+             .Where(e => e.UserId == _userId)
+             .Select(e => new MacroDetail
+             {
+                 UserId = _userId,
+                 Calories = e.Calories,
+                 Protein = e.Protein,
+                 Carbs = e.Carbs,
+                 Fats = e.Fats
+             })
+             .ToListAsync();
+
+            return macros;
+        }
+
+        public async Task<bool> UpdateMacroAsync(MacroUpdate request, int userId)
         {
             MacroEntity? entity = await _dbContext.Macros
-                .FirstOrDefaultAsync(e => e.Id == userId && e.UserId == _userId);
+                .Where(m => m.UserId == userId)
+                .FirstOrDefaultAsync();
 
-            return entity is null ? null : new MacroDetail
+            if (entity == null)
             {
-                Id = entity.Id,
-                Calories = entity.Calories,
-                Protein = entity.Protein,
-                Carbs = entity.Carbs,
-                Fats = entity.Fats
-            };
+                // MacroEntity not found for the given user
+                return false;
+            }
+
+            entity.Calories = request.Calories;
+            entity.Protein = request.Protein;
+            entity.Carbs = request.Carbs;
+            entity.Fats = request.Fats;
+
+            int numberOfChanges = await _dbContext.SaveChangesAsync();
+
+            // Check if exactly one change was made
+            return numberOfChanges == 1;
         }
-
-       public async Task<bool> UpdateMacroAsync(MacroUpdate request, int userId)
-    {
-        MacroEntity? entity = await _dbContext.Macros
-            .Where(m => m.UserId == userId)
-            .FirstOrDefaultAsync();
-
-        if (entity == null)
-        {
-            // MacroEntity not found for the given user
-            return false;
-        }
-
-        entity.Calories = request.Calories;
-        entity.Protein = request.Protein;
-        entity.Carbs = request.Carbs;
-        entity.Fats = request.Fats;
-
-        int numberOfChanges = await _dbContext.SaveChangesAsync();
-
-        // Check if exactly one change was made
-        return numberOfChanges == 1;
-    }
         public async Task<bool> DeleteMacroAsync(int macroId)
         {
             var macroEntity = await _dbContext.Macros.FindAsync(macroId);

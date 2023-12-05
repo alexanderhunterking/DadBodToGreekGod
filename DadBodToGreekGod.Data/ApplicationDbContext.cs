@@ -29,6 +29,7 @@ namespace DadBodToGreekGod.Data
 
         // Add configurations for the new entities
         modelBuilder.Entity<MealEntity>().ToTable("Meals");
+        modelBuilder.Entity<MealEntity>().HasIndex(e => e.UserId);
         modelBuilder.Entity<IngredientEntity>().ToTable("Ingredients");
         modelBuilder.Entity<MealIngredientEntity>().ToTable("MealIngredients");
         modelBuilder.Entity<CalendarEntity>().ToTable("Calendars");

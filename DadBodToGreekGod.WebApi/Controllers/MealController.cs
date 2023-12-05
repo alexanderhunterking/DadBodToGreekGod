@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using DadBodToGreekGod.Models.Meal;
+using DadBodToGreekGod.Models.Responses;
 using DadBodToGreekGod.Services.Meal;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,16 +25,20 @@ namespace DadBodToGreekGod.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMeal([FromBody] CreateMealModel createModel)
+        public async Task<IActionResult> CreateMeal([FromBody] CreateMealModel request)
         {
-            if (!ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var mealId = await _mealService.CreateMealAsync(createModel);
+            var response = await _mealService.CreateMealAsync(request);
+            if (response is not null)
+            {
+                return Ok(response);
+            }
 
-            return CreatedAtAction(nameof(GetMealDetails), new { mealId }, null);
+            return BadRequest(new TextResponse("Could not create macro."));
         }
 
         [HttpGet("{mealId}")]
@@ -49,10 +54,10 @@ namespace DadBodToGreekGod.WebApi.Controllers
             return Ok(mealDetails);
         }
 
-        [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetUserMeals(int userId)
+        [HttpGet("user")]
+        public async Task<IActionResult> GetUserMeals()
         {
-            var userMeals = await _mealService.GetUserMealsAsync(userId);
+            var userMeals = await _mealService.GetUserMealsAsync();
 
             return Ok(userMeals);
         }

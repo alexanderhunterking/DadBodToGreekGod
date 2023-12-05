@@ -10,7 +10,7 @@ namespace DadBodToGreekGod.Services.UserMealAssignment
     {
         Task<int> AssignMealToUserAsync(AssignMealToUserModel assignModel);
 
-        Task<List<UserMealAssignmentListItemModel>> GetUserMealAssignmentsAsync(int userId);
+        Task<IEnumerable<UserMealAssignmentListItemModel>> GetUserMealAssignmentsAsync();
 
         Task UpdateUserMealAssignmentAsync(int userMealAssignmentId, UpdateUserMealAssignmentModel updateModel);
 

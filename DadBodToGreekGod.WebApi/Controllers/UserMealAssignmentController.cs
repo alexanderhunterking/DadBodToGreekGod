@@ -37,10 +37,10 @@ namespace DadBodToGreekGod.WebApi.Controllers
             return CreatedAtAction(nameof(GetUserMealAssignments), new { userId = assignModel.UserId }, null);
         }
 
-        [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetUserMealAssignments(int userId)
+        [HttpGet("user")]
+        public async Task<IActionResult> GetUserMealAssignments()
         {
-            var userMealAssignments = await _userMealAssignmentService.GetUserMealAssignmentsAsync(userId);
+            var userMealAssignments = await _userMealAssignmentService.GetUserMealAssignmentsAsync();
 
             return Ok(userMealAssignments);
         }

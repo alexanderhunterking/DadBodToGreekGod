@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DadBodToGreekGod.Data;
 using DadBodToGreekGod.Data.Entities;
 using DadBodToGreekGod.Models.UserMealAssignment;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DadBodToGreekGod.Services.UserMealAssignment
@@ -13,9 +14,21 @@ namespace DadBodToGreekGod.Services.UserMealAssignment
 public class UserMealAssignmentService : IUserMealAssignmentService
 {
     private readonly ApplicationDbContext _context;
+    private readonly int _userId;
 
-    public UserMealAssignmentService(ApplicationDbContext context)
+    public UserMealAssignmentService(UserManager<UserEntity> userManager,
+                            SignInManager<UserEntity> signInManager, 
+                            ApplicationDbContext context)
     {
+         var currentUser = signInManager.Context.User;
+            var userIdClaim = userManager.GetUserId(currentUser);
+            var hasValidId = int.TryParse(userIdClaim, out _userId);
+
+        if (hasValidId == false)
+            {
+                throw new Exception("Attempted to build MacroService without Id Claim.");
+            }
+
         _context = context;
     }
 
@@ -35,10 +48,10 @@ public class UserMealAssignmentService : IUserMealAssignmentService
         return userMealAssignmentEntity.UserMealAssignmentId;
     }
 
-    public async Task<List<UserMealAssignmentListItemModel>> GetUserMealAssignmentsAsync(int userId)
+    public async Task<IEnumerable<UserMealAssignmentListItemModel>> GetUserMealAssignmentsAsync()
     {
-        var userMealAssignments = await _context.UserMealAssignments
-            .Where(uma => uma.UserId == userId)
+        List<UserMealAssignmentListItemModel> userMealAssingments = await _context.UserMealAssignments
+            .Where(uma => uma.UserId == _userId)
             .Select(uma => new UserMealAssignmentListItemModel
             {
                 UserMealAssignmentId = uma.UserMealAssignmentId,
@@ -48,7 +61,7 @@ public class UserMealAssignmentService : IUserMealAssignmentService
             })
             .ToListAsync();
 
-        return userMealAssignments;
+        return userMealAssingments;
     }
 
     public async Task UpdateUserMealAssignmentAsync(int userMealAssignmentId, UpdateUserMealAssignmentModel updateModel)

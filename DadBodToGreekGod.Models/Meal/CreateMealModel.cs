@@ -8,11 +8,6 @@ namespace DadBodToGreekGod.Models.Meal
 {
     public class CreateMealModel
     {
-         [Required]
-    public int UserId { get; set; }
-
-    [Required]
-    public int CalendarId { get; set; }
 
     [Required]
     public string MealName { get; set; }

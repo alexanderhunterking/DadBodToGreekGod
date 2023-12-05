@@ -62,13 +62,11 @@ namespace DadBodToGreekGod.WebApi.Controllers
             }
         }
 
-        [HttpGet("{userId:int}")]
-        public async Task<IActionResult> GetMacroById([FromRoute] int userId)
+        [HttpGet("user")]
+        public async Task<IActionResult> GetMacroById()
         {
-            MacroDetail? detail = await _macroService.GetMacroByIdAsync(userId);
-            return detail is not null
-            ? Ok(detail)
-            : NotFound();
+            var userMacros = await _macroService.GetMacroByIdAsync();
+            return Ok(userMacros);
         }
 
         // [HttpPut]
