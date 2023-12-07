@@ -1,0 +1,147 @@
+body {
+background-color: rgb(12,16,19);
+}
+
+.form-control {
+    border: none;
+    background-color: rgb(34, 37, 42);
+}
+
+.form-select {
+    border: none;
+    background-color: rgb(34, 37, 42);
+}
+
+.btn-primary {
+  background-color: #BC63BA;
+  border: none;
+}
+.btn-primary:hover {
+  background-color: #894888;
+  border: none;
+}
+
+#pageTitle {
+    margin-top: 15px;
+    border-bottom: solid;
+    border-width: 1.2px;
+    border-color: rgb(34, 37, 42);
+    width: 98%;
+}
+
+.card {
+width: 100%;
+font-size: 14px;
+background-color:  rgb(25, 27, 31);
+border: none;
+border-radius: 5px;
+box-shadow: 2px 2px 4px #00000037;
+}
+
+.card-title {
+    border-bottom: solid;
+    border-width: 1.2px;
+    border-color: rgb(34, 37, 42);
+}
+
+.navbar-global {
+    background-color: indigo;
+  }
+  
+  .navbar-global .navbar-brand {
+    color: white;
+  }
+  
+  .navbar-global .navbar-user > li > a
+  {
+    color: white;
+  }
+  
+  .navbar-primary {
+    background-color:  rgb(25, 27, 31);
+    bottom: 0px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 200px;
+    z-index: 8;
+    overflow: hidden;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+  }
+  
+  .navbar-primary.collapsed {
+    width: 75px;
+  }
+  
+  .navbar-primary.collapsed .glyphicon {
+    font-size: 22px;
+  }
+  
+  .navbar-primary.collapsed .nav-label {
+    display: none;
+  }
+  
+  .btn-expand-collapse {
+    background-color:  rgb(25, 27, 31);
+      position: absolute;
+      display: block;
+      left: 0px;
+      bottom:0;
+      width: 100%;
+      padding: 8px 0;
+      color: white;
+      font-size: 20px;
+      text-align: center;
+  }
+  
+  .btn-expand-collapse:hover {
+      background-color:  rgb(34, 37, 42);
+      color: white;
+  }
+  
+  .btn-expand-collapse:active {
+      background-color: rgb(25, 27, 31);
+  }
+  
+  .navbar-primary-menu,
+  .navbar-primary-menu li {
+    margin:0; padding:0;
+    list-style: none;
+  }
+  
+  .navbar-primary-menu li a {
+    display: block;
+    padding: 10px 18px;
+    margin: 10px;
+    text-align: left;
+    color: #ccc;
+  }
+  
+  .navbar-primary-menu li a:hover {
+    background-color: rgb(34, 37, 42);
+    text-decoration: none;
+    color: white;
+  }
+  
+  .navbar-primary-menu li a .glyphicon {
+    margin-right: 6px;
+  }
+  
+  .navbar-primary-menu li a:hover .glyphicon {
+    color: orchid;
+  }
+  #active {
+    color: orchid;
+    background-color: rgba(218, 112, 214, 0.189);
+  }
+  
+  .main-content {
+    margin-left: 240px;
+    padding: 10px;
+  }
+  
+  .collapsed + .main-content {
+    margin-left: 115px;
+  }

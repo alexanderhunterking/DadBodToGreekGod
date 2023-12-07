@@ -10,6 +10,7 @@ namespace DadBodToGreekGod.Models.MealIngredient
         public int MealIngredientId { get; set; }
 
         public int MealId { get; set; }
+        public int UserId { get; set; }
 
         public int IngredientId { get; set; }
 

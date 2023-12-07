@@ -22,7 +22,41 @@ namespace DadBodToGreekGod.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DadBodToGreekGod.Data.Entities.CalendarEntity", b =>
+            modelBuilder.Entity("DadBodToGreekGod.Data.Entities.CalendarDayEntity", b =>
+                {
+                    b.Property<int>("CalendarDayId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CalendarDayId"));
+
+                    b.Property<int?>("CalendarWeekEntityCalendarId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DayOfTheWeek")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MealId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TimeOfDay")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CalendarDayId");
+
+                    b.HasIndex("CalendarWeekEntityCalendarId");
+
+                    b.HasIndex("MealId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CalendarDays", (string)null);
+                });
+
+            modelBuilder.Entity("DadBodToGreekGod.Data.Entities.CalendarWeekEntity", b =>
                 {
                     b.Property<int>("CalendarId")
                         .ValueGeneratedOnAdd()
@@ -30,13 +64,11 @@ namespace DadBodToGreekGod.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CalendarId"));
 
-                    b.Property<string>("CookingDay")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CookingDay")
+                        .HasColumnType("int");
 
-                    b.Property<string>("ShoppingDay")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ShoppingDay")
+                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -45,7 +77,7 @@ namespace DadBodToGreekGod.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Calendars", (string)null);
+                    b.ToTable("CalendarWeeks", (string)null);
                 });
 
             modelBuilder.Entity("DadBodToGreekGod.Data.Entities.IngredientEntity", b =>
@@ -75,6 +107,413 @@ namespace DadBodToGreekGod.Data.Migrations
                     b.HasKey("IngredientId");
 
                     b.ToTable("Ingredients", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            IngredientId = 100,
+                            CaloriesPer100g = 165.0,
+                            CarbsPer100g = 0.0,
+                            FatPer100g = 3.6000000000000001,
+                            Name = "Chicken Breast",
+                            ProteinPer100g = 31.0
+                        },
+                        new
+                        {
+                            IngredientId = 2,
+                            CaloriesPer100g = 250.0,
+                            CarbsPer100g = 0.0,
+                            FatPer100g = 17.0,
+                            Name = "Ground Beef",
+                            ProteinPer100g = 26.0
+                        },
+                        new
+                        {
+                            IngredientId = 3,
+                            CaloriesPer100g = 206.0,
+                            CarbsPer100g = 0.0,
+                            FatPer100g = 13.0,
+                            Name = "Salmon",
+                            ProteinPer100g = 25.0
+                        },
+                        new
+                        {
+                            IngredientId = 4,
+                            CaloriesPer100g = 55.0,
+                            CarbsPer100g = 11.0,
+                            FatPer100g = 0.59999999999999998,
+                            Name = "Broccoli",
+                            ProteinPer100g = 3.7000000000000002
+                        },
+                        new
+                        {
+                            IngredientId = 5,
+                            CaloriesPer100g = 23.0,
+                            CarbsPer100g = 3.6000000000000001,
+                            FatPer100g = 0.40000000000000002,
+                            Name = "Spinach",
+                            ProteinPer100g = 2.8999999999999999
+                        },
+                        new
+                        {
+                            IngredientId = 6,
+                            CaloriesPer100g = 86.0,
+                            CarbsPer100g = 20.100000000000001,
+                            FatPer100g = 0.10000000000000001,
+                            Name = "Sweet Potato",
+                            ProteinPer100g = 1.6000000000000001
+                        },
+                        new
+                        {
+                            IngredientId = 7,
+                            CaloriesPer100g = 130.0,
+                            CarbsPer100g = 28.0,
+                            FatPer100g = 0.20000000000000001,
+                            Name = "White Rice",
+                            ProteinPer100g = 2.7000000000000002
+                        },
+                        new
+                        {
+                            IngredientId = 104,
+                            CaloriesPer100g = 135.0,
+                            CarbsPer100g = 0.0,
+                            FatPer100g = 1.0,
+                            Name = "Turkey Breast",
+                            ProteinPer100g = 29.0
+                        },
+                        new
+                        {
+                            IngredientId = 105,
+                            CaloriesPer100g = 250.0,
+                            CarbsPer100g = 0.0,
+                            FatPer100g = 17.0,
+                            Name = "Steak",
+                            ProteinPer100g = 26.0
+                        },
+                        new
+                        {
+                            IngredientId = 106,
+                            CaloriesPer100g = 143.0,
+                            CarbsPer100g = 0.0,
+                            FatPer100g = 7.0,
+                            Name = "Pork Chops",
+                            ProteinPer100g = 21.0
+                        },
+                        new
+                        {
+                            IngredientId = 107,
+                            CaloriesPer100g = 82.0,
+                            CarbsPer100g = 0.0,
+                            FatPer100g = 1.0,
+                            Name = "Cod",
+                            ProteinPer100g = 18.0
+                        },
+                        new
+                        {
+                            IngredientId = 108,
+                            CaloriesPer100g = 116.0,
+                            CarbsPer100g = 0.0,
+                            FatPer100g = 1.0,
+                            Name = "Tuna",
+                            ProteinPer100g = 25.0
+                        },
+                        new
+                        {
+                            IngredientId = 109,
+                            CaloriesPer100g = 96.0,
+                            CarbsPer100g = 0.0,
+                            FatPer100g = 1.7,
+                            Name = "Tilapia",
+                            ProteinPer100g = 21.0
+                        },
+                        new
+                        {
+                            IngredientId = 110,
+                            CaloriesPer100g = 98.0,
+                            CarbsPer100g = 3.3999999999999999,
+                            FatPer100g = 4.2999999999999998,
+                            Name = "Cottage Cheese",
+                            ProteinPer100g = 11.0
+                        },
+                        new
+                        {
+                            IngredientId = 111,
+                            CaloriesPer100g = 144.0,
+                            CarbsPer100g = 3.8999999999999999,
+                            FatPer100g = 8.0,
+                            Name = "Tofu",
+                            ProteinPer100g = 15.0
+                        },
+                        new
+                        {
+                            IngredientId = 200,
+                            CaloriesPer100g = 59.0,
+                            CarbsPer100g = 3.6000000000000001,
+                            FatPer100g = 0.40000000000000002,
+                            Name = "Greek Yogurt",
+                            ProteinPer100g = 10.0
+                        },
+                        new
+                        {
+                            IngredientId = 112,
+                            CaloriesPer100g = 109.0,
+                            CarbsPer100g = 0.0,
+                            FatPer100g = 1.0,
+                            Name = "Canned Tuna",
+                            ProteinPer100g = 24.0
+                        },
+                        new
+                        {
+                            IngredientId = 201,
+                            CaloriesPer100g = 132.0,
+                            CarbsPer100g = 23.699999999999999,
+                            FatPer100g = 0.5,
+                            Name = "Black Beans",
+                            ProteinPer100g = 8.9000000000000004
+                        },
+                        new
+                        {
+                            IngredientId = 113,
+                            CaloriesPer100g = 132.0,
+                            CarbsPer100g = 23.699999999999999,
+                            FatPer100g = 0.5,
+                            Name = "Black Beans",
+                            ProteinPer100g = 8.9000000000000004
+                        },
+                        new
+                        {
+                            IngredientId = 115,
+                            CaloriesPer100g = 85.0,
+                            CarbsPer100g = 0.0,
+                            FatPer100g = 1.2,
+                            Name = "Shrimp",
+                            ProteinPer100g = 20.0
+                        },
+                        new
+                        {
+                            IngredientId = 116,
+                            CaloriesPer100g = 61.0,
+                            CarbsPer100g = 4.7999999999999998,
+                            FatPer100g = 3.7000000000000002,
+                            Name = "Whole Milk",
+                            ProteinPer100g = 3.2000000000000002
+                        },
+                        new
+                        {
+                            IngredientId = 101,
+                            CaloriesPer100g = 120.0,
+                            CarbsPer100g = 21.0,
+                            FatPer100g = 1.8999999999999999,
+                            Name = "Quinoa",
+                            ProteinPer100g = 4.0
+                        },
+                        new
+                        {
+                            IngredientId = 102,
+                            CaloriesPer100g = 120.0,
+                            CarbsPer100g = 21.0,
+                            FatPer100g = 1.8999999999999999,
+                            Name = "Quinoa",
+                            ProteinPer100g = 4.0
+                        },
+                        new
+                        {
+                            IngredientId = 118,
+                            CaloriesPer100g = 318.0,
+                            CarbsPer100g = 1.6000000000000001,
+                            FatPer100g = 25.0,
+                            Name = "Mozzarella Cheese",
+                            ProteinPer100g = 22.0
+                        },
+                        new
+                        {
+                            IngredientId = 119,
+                            CaloriesPer100g = 403.0,
+                            CarbsPer100g = 1.3,
+                            FatPer100g = 33.0,
+                            Name = "Cheddar Cheese",
+                            ProteinPer100g = 25.0
+                        },
+                        new
+                        {
+                            IngredientId = 120,
+                            CaloriesPer100g = 389.0,
+                            CarbsPer100g = 2.6000000000000001,
+                            FatPer100g = 32.0,
+                            Name = "Colby Jack Cheese",
+                            ProteinPer100g = 23.0
+                        },
+                        new
+                        {
+                            IngredientId = 121,
+                            CaloriesPer100g = 576.0,
+                            CarbsPer100g = 22.0,
+                            FatPer100g = 49.0,
+                            Name = "Almonds",
+                            ProteinPer100g = 21.0
+                        },
+                        new
+                        {
+                            IngredientId = 122,
+                            CaloriesPer100g = 143.0,
+                            CarbsPer100g = 1.1000000000000001,
+                            FatPer100g = 9.5,
+                            Name = "Eggs",
+                            ProteinPer100g = 13.0
+                        },
+                        new
+                        {
+                            IngredientId = 123,
+                            CaloriesPer100g = 111.0,
+                            CarbsPer100g = 23.5,
+                            FatPer100g = 0.90000000000000002,
+                            Name = "Brown Rice",
+                            ProteinPer100g = 2.6000000000000001
+                        },
+                        new
+                        {
+                            IngredientId = 124,
+                            CaloriesPer100g = 77.0,
+                            CarbsPer100g = 17.0,
+                            FatPer100g = 0.10000000000000001,
+                            Name = "Potatoes",
+                            ProteinPer100g = 2.0
+                        },
+                        new
+                        {
+                            IngredientId = 125,
+                            CaloriesPer100g = 68.0,
+                            CarbsPer100g = 12.0,
+                            FatPer100g = 1.3999999999999999,
+                            Name = "Oatmeal",
+                            ProteinPer100g = 2.3999999999999999
+                        },
+                        new
+                        {
+                            IngredientId = 126,
+                            CaloriesPer100g = 43.0,
+                            CarbsPer100g = 8.3000000000000007,
+                            FatPer100g = 0.29999999999999999,
+                            Name = "Brussels Sprouts",
+                            ProteinPer100g = 3.3999999999999999
+                        },
+                        new
+                        {
+                            IngredientId = 127,
+                            CaloriesPer100g = 49.0,
+                            CarbsPer100g = 8.8000000000000007,
+                            FatPer100g = 0.90000000000000002,
+                            Name = "Kale",
+                            ProteinPer100g = 4.2999999999999998
+                        },
+                        new
+                        {
+                            IngredientId = 128,
+                            CaloriesPer100g = 25.0,
+                            CarbsPer100g = 5.0,
+                            FatPer100g = 0.29999999999999999,
+                            Name = "Cauliflower",
+                            ProteinPer100g = 1.8999999999999999
+                        },
+                        new
+                        {
+                            IngredientId = 129,
+                            CaloriesPer100g = 43.0,
+                            CarbsPer100g = 10.0,
+                            FatPer100g = 0.5,
+                            Name = "Blackberries",
+                            ProteinPer100g = 2.0
+                        },
+                        new
+                        {
+                            IngredientId = 130,
+                            CaloriesPer100g = 31.0,
+                            CarbsPer100g = 7.0,
+                            FatPer100g = 0.20000000000000001,
+                            Name = "Green Beans",
+                            ProteinPer100g = 1.8
+                        },
+                        new
+                        {
+                            IngredientId = 131,
+                            CaloriesPer100g = 89.0,
+                            CarbsPer100g = 23.0,
+                            FatPer100g = 0.29999999999999999,
+                            Name = "Bananas",
+                            ProteinPer100g = 1.1000000000000001
+                        },
+                        new
+                        {
+                            IngredientId = 132,
+                            CaloriesPer100g = 32.0,
+                            CarbsPer100g = 8.0,
+                            FatPer100g = 0.29999999999999999,
+                            Name = "Strawberries",
+                            ProteinPer100g = 0.69999999999999996
+                        },
+                        new
+                        {
+                            IngredientId = 133,
+                            CaloriesPer100g = 52.0,
+                            CarbsPer100g = 11.0,
+                            FatPer100g = 0.69999999999999996,
+                            Name = "Raspberries",
+                            ProteinPer100g = 1.2
+                        },
+                        new
+                        {
+                            IngredientId = 134,
+                            CaloriesPer100g = 50.0,
+                            CarbsPer100g = 13.0,
+                            FatPer100g = 0.10000000000000001,
+                            Name = "Pineapple",
+                            ProteinPer100g = 0.5
+                        },
+                        new
+                        {
+                            IngredientId = 135,
+                            CaloriesPer100g = 57.0,
+                            CarbsPer100g = 14.0,
+                            FatPer100g = 0.29999999999999999,
+                            Name = "Blueberries",
+                            ProteinPer100g = 0.69999999999999996
+                        },
+                        new
+                        {
+                            IngredientId = 136,
+                            CaloriesPer100g = 41.0,
+                            CarbsPer100g = 10.0,
+                            FatPer100g = 0.20000000000000001,
+                            Name = "Carrots",
+                            ProteinPer100g = 0.90000000000000002
+                        },
+                        new
+                        {
+                            IngredientId = 137,
+                            CaloriesPer100g = 18.0,
+                            CarbsPer100g = 3.8999999999999999,
+                            FatPer100g = 0.20000000000000001,
+                            Name = "Tomatoes",
+                            ProteinPer100g = 0.90000000000000002
+                        },
+                        new
+                        {
+                            IngredientId = 138,
+                            CaloriesPer100g = 31.0,
+                            CarbsPer100g = 6.0,
+                            FatPer100g = 0.29999999999999999,
+                            Name = "Bell Peppers",
+                            ProteinPer100g = 1.0
+                        },
+                        new
+                        {
+                            IngredientId = 139,
+                            CaloriesPer100g = 160.0,
+                            CarbsPer100g = 8.5,
+                            FatPer100g = 14.699999999999999,
+                            Name = "Avocado",
+                            ProteinPer100g = 2.0
+                        });
                 });
 
             modelBuilder.Entity("DadBodToGreekGod.Data.Entities.MacroEntity", b =>
@@ -116,9 +555,6 @@ namespace DadBodToGreekGod.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MealId"));
 
-                    b.Property<int?>("CalendarEntityCalendarId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CalendarId")
                         .HasColumnType("int");
 
@@ -134,8 +570,6 @@ namespace DadBodToGreekGod.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("MealId");
-
-                    b.HasIndex("CalendarEntityCalendarId");
 
                     b.HasIndex("UserId");
 
@@ -159,11 +593,16 @@ namespace DadBodToGreekGod.Data.Migrations
                     b.Property<double>("Quantity")
                         .HasColumnType("float");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("MealIngredientId");
 
                     b.HasIndex("IngredientId");
 
                     b.HasIndex("MealId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("MealIngredients", (string)null);
                 });
@@ -189,8 +628,6 @@ namespace DadBodToGreekGod.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ShoppingListId");
-
-                    b.HasIndex("CalendarId");
 
                     b.HasIndex("IngredientId");
 
@@ -276,29 +713,6 @@ namespace DadBodToGreekGod.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Users", (string)null);
-                });
-
-            modelBuilder.Entity("DadBodToGreekGod.Data.Entities.UserMealAssignmentEntity", b =>
-                {
-                    b.Property<int>("UserMealAssignmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MealId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TimeOfDay")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserMealAssignmentId", "UserId", "MealId");
-
-                    b.HasIndex("MealId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserMealAssignments", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
@@ -438,7 +852,30 @@ namespace DadBodToGreekGod.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("DadBodToGreekGod.Data.Entities.CalendarEntity", b =>
+            modelBuilder.Entity("DadBodToGreekGod.Data.Entities.CalendarDayEntity", b =>
+                {
+                    b.HasOne("DadBodToGreekGod.Data.Entities.CalendarWeekEntity", null)
+                        .WithMany("CalendarDays")
+                        .HasForeignKey("CalendarWeekEntityCalendarId");
+
+                    b.HasOne("DadBodToGreekGod.Data.Entities.MealEntity", "Meal")
+                        .WithMany()
+                        .HasForeignKey("MealId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DadBodToGreekGod.Data.Entities.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Meal");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DadBodToGreekGod.Data.Entities.CalendarWeekEntity", b =>
                 {
                     b.HasOne("DadBodToGreekGod.Data.Entities.UserEntity", "User")
                         .WithMany()
@@ -451,10 +888,6 @@ namespace DadBodToGreekGod.Data.Migrations
 
             modelBuilder.Entity("DadBodToGreekGod.Data.Entities.MealEntity", b =>
                 {
-                    b.HasOne("DadBodToGreekGod.Data.Entities.CalendarEntity", null)
-                        .WithMany("Meals")
-                        .HasForeignKey("CalendarEntityCalendarId");
-
                     b.HasOne("DadBodToGreekGod.Data.Entities.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -478,19 +911,21 @@ namespace DadBodToGreekGod.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DadBodToGreekGod.Data.Entities.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Ingredient");
 
                     b.Navigation("Meal");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DadBodToGreekGod.Data.Entities.ShoppingListEntity", b =>
                 {
-                    b.HasOne("DadBodToGreekGod.Data.Entities.CalendarEntity", "Calendar")
-                        .WithMany("ShoppingLists")
-                        .HasForeignKey("CalendarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("DadBodToGreekGod.Data.Entities.IngredientEntity", "Ingredient")
                         .WithMany()
                         .HasForeignKey("IngredientId")
@@ -503,28 +938,7 @@ namespace DadBodToGreekGod.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Calendar");
-
                     b.Navigation("Ingredient");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DadBodToGreekGod.Data.Entities.UserMealAssignmentEntity", b =>
-                {
-                    b.HasOne("DadBodToGreekGod.Data.Entities.MealEntity", "Meal")
-                        .WithMany("UserMealAssignments")
-                        .HasForeignKey("MealId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DadBodToGreekGod.Data.Entities.UserEntity", "User")
-                        .WithMany("UserMealAssignments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Meal");
 
                     b.Navigation("User");
                 });
@@ -580,23 +994,14 @@ namespace DadBodToGreekGod.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DadBodToGreekGod.Data.Entities.CalendarEntity", b =>
+            modelBuilder.Entity("DadBodToGreekGod.Data.Entities.CalendarWeekEntity", b =>
                 {
-                    b.Navigation("Meals");
-
-                    b.Navigation("ShoppingLists");
+                    b.Navigation("CalendarDays");
                 });
 
             modelBuilder.Entity("DadBodToGreekGod.Data.Entities.MealEntity", b =>
                 {
                     b.Navigation("MealIngredients");
-
-                    b.Navigation("UserMealAssignments");
-                });
-
-            modelBuilder.Entity("DadBodToGreekGod.Data.Entities.UserEntity", b =>
-                {
-                    b.Navigation("UserMealAssignments");
                 });
 #pragma warning restore 612, 618
         }

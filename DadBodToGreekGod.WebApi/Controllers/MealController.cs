@@ -27,7 +27,7 @@ namespace DadBodToGreekGod.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMeal([FromBody] CreateMealModel request)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
@@ -59,6 +59,12 @@ namespace DadBodToGreekGod.WebApi.Controllers
         {
             var userMeals = await _mealService.GetUserMealsAsync();
 
+            if (userMeals == null || !userMeals.Any())
+            {
+                // If userMeals is null or empty, return an error response
+                return NotFound("User doesn't have any meals.");
+            }
+
             return Ok(userMeals);
         }
 
@@ -76,11 +82,21 @@ namespace DadBodToGreekGod.WebApi.Controllers
         }
 
         [HttpDelete("{mealId}")]
-        public async Task<IActionResult> DeleteMeal(int mealId)
-        {
-            await _mealService.DeleteMealAsync(mealId);
+public async Task<IActionResult> DeleteMealAsync(int mealId)
+{
+    var mealDetails = await _mealService.GetMealDetailsAsync(mealId);
 
-            return NoContent();
-        }
+    if (mealDetails == null)
+    {
+        return NotFound();
+    }
+
+    // Check if the user has permission to delete the meal (if needed)
+
+    // Delete the meal (including cascading delete for associated MealIngredientEntity instances)
+    await _mealService.DeleteMealAsync(mealId);
+
+    return NoContent(); // Or return an appropriate response
+}
     }
 }

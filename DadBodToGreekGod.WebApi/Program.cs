@@ -26,12 +26,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IMacroService, MacroService>();
-builder.Services.AddScoped<ICalendarService, CalendarService>();
+builder.Services.AddScoped<ICalendarWeekService, CalendarWeekService>();
 builder.Services.AddScoped<IIngredientService, IngredientService>();
 builder.Services.AddScoped<IMealService, MealService>();
 builder.Services.AddScoped<IShoppingListService, ShoppingListService>();
 builder.Services.AddScoped<IMealIngredientService, MealIngredientService>();
-builder.Services.AddScoped<IUserMealAssignmentService, UserMealAssignmentService>();
+builder.Services.AddScoped<ICalendarDayService, CalendarDayService>();
 
 
 builder.Services.AddHttpContextAccessor();

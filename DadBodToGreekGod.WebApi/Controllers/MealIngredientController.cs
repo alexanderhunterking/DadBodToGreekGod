@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using DadBodToGreekGod.Models.MealIngredient;
+using DadBodToGreekGod.Models.Responses;
 using DadBodToGreekGod.Services.MealIngredient;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,9 +32,13 @@ namespace DadBodToGreekGod.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var mealIngredientId = await _mealIngredientService.AddIngredientToMealAsync(addModel);
+            var response = await _mealIngredientService.AddIngredientToMealAsync(addModel);
+            if (response is not null)
+            {
+                return Ok(response);
+            }
 
-            return CreatedAtAction(nameof(MealIngredientDetailsModel), new { mealIngredientId }, null);
+            return BadRequest(new TextResponse("Could not create mealingredient."));
         }
 
         [HttpGet("meal/{mealId}")]

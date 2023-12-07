@@ -5,22 +5,45 @@ using DadBodToGreekGod.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using DadBodToGreekGod.Models.MealIngredient;
 using DadBodToGreekGod.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace DadBodToGreekGod.Services.MealIngredient
 {
     public class MealIngredientService : IMealIngredientService
 {
     private readonly ApplicationDbContext _context;
+    private readonly int _userId;
 
-    public MealIngredientService(ApplicationDbContext context)
-    {
-        _context = context;
-    }
-
-    public async Task<int> AddIngredientToMealAsync(AddIngredientToMealModel addModel)
-    {
-        var mealIngredientEntity = new MealIngredientEntity
+     public MealIngredientService(UserManager<UserEntity> userManager,
+                            SignInManager<UserEntity> signInManager,
+                            ApplicationDbContext context)
         {
+           
+              var currentUser = signInManager.Context.User;
+              var userIdClaim = userManager.GetUserId(currentUser);
+              var hasValidId = int.TryParse(userIdClaim, out _userId);
+
+               if (hasValidId == false)
+            {
+                throw new Exception("Attempted to build MealService without Id Claim.");
+            }
+
+            _context = context;
+        }
+
+    public async Task<MealIngredientDetailsModel> AddIngredientToMealAsync(AddIngredientToMealModel addModel)
+    {
+        // var existingMeal = await _context.MealIngredients
+        //         .FirstOrDefaultAsync(m => m.UserId == _userId && m.IngredientId == addModel.IngredientId);
+
+        //     if (existingMeal != null)
+        //     {
+        //        throw new InvalidOperationException("A meal with that name has already been created");
+        //     }
+
+        MealIngredientEntity mealIngredientEntity = new()
+        {   
+            UserId = _userId,
             MealId = addModel.MealId,
             IngredientId = addModel.IngredientId,
             Quantity = addModel.Quantity
@@ -28,9 +51,22 @@ namespace DadBodToGreekGod.Services.MealIngredient
         };
 
         _context.MealIngredients.Add(mealIngredientEntity);
-        await _context.SaveChangesAsync();
+            var numberOfChanges = await _context.SaveChangesAsync();
 
-        return mealIngredientEntity.MealIngredientId;
+            if (numberOfChanges !=1)
+            {
+                return null;
+            }
+
+            MealIngredientDetailsModel response = new()
+            {
+            UserId = _userId,
+            MealId = addModel.MealId,
+            IngredientId = addModel.IngredientId,
+            Quantity = addModel.Quantity
+            };
+
+        return response;
     }
 
     public async Task<List<MealIngredientListItemModel>> GetMealIngredientsAsync(int mealId)

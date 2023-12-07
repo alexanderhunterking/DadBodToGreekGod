@@ -29,7 +29,7 @@ namespace DadBodToGreekGod.Services.Meal
 
                if (hasValidId == false)
             {
-                throw new Exception("Attempted to build MacroService without Id Claim.");
+                throw new Exception("Attempted to build MealService without Id Claim.");
             }
 
             _context = context;

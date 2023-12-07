@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
-using AutoMapper;
+using AutoMapper; 
 
-namespace DadBodToGreekGod.Services.Macro
+namespace DadBodToGreekGod.Services.Macro  
 {
     public class MacroService : IMacroService
     {

@@ -28,7 +28,5 @@ namespace DadBodToGreekGod.Data.Entities
     public UserEntity User { get; set; }
 
     public List<MealIngredientEntity> MealIngredients { get; set; }
-    
-    public List<UserMealAssignmentEntity> UserMealAssignments { get; set; }
     }
 }

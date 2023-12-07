@@ -8,7 +8,7 @@ namespace DadBodToGreekGod.Services.MealIngredient
 {
     public interface IMealIngredientService
     {
-        Task<int> AddIngredientToMealAsync(AddIngredientToMealModel addModel);
+        Task<MealIngredientDetailsModel> AddIngredientToMealAsync(AddIngredientToMealModel addModel);
 
         Task<List<MealIngredientListItemModel>> GetMealIngredientsAsync(int mealId);
 
