@@ -19,7 +19,7 @@
 - **Database**: SQL Server or any supported database
 - **Authentication**: JWT (JSON Web Tokens)
 - **Dependency Injection**: .NET Core DI
-- **API Documentation**: Swagger/OpenAPI
+- **API Documentation**: Swagger
 
 ## Getting Started
 
