@@ -10,6 +10,7 @@ using DadBodToGreekGod.Services.Token;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace DadBodToGreekGod.WebApi.Controllers
 {
@@ -45,18 +46,40 @@ namespace DadBodToGreekGod.WebApi.Controllers
         }
 
         [Authorize]
-        [HttpGet("{userId:int}")]
-        public async Task<IActionResult> GetById([FromRoute] int userId)
+        [HttpGet("user")]
+        public async Task<IActionResult> GetById()
         {
-            UserDetail? detail = await _userService.GetUserByIdAsync(userId);
+            int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            if (detail is null)
+            var userHasCalendar = await _userService.GetUserByIdAsync(id);
+
+            return Ok(userHasCalendar);
+        }
+
+        [Authorize]
+        [HttpPut]
+         public async Task<IActionResult> UpdateUser([FromBody] UserUpdate request)
+        {
+            // Access UserId from the authentication token claims
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return BadRequest(ModelState);
             }
 
-            return Ok(detail);
+            var response = await _userService.UpdateUserAsync(request, userId);
+
+            if (response)
+            {
+                return Ok(new TextResponse("UserEntity updated successfully."));
+            }
+            else
+            {
+                return NotFound(); // or handle unauthorized or UserEntity not found accordingly
+            }
         }
+
 
         [HttpPost("~/api/Token")]
         public async Task<IActionResult> GetToken([FromBody] TokenRequest request)

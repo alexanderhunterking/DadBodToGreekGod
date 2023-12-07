@@ -2,6 +2,7 @@ using DadBodToGreekGod.Models.User;
 using DadBodToGreekGod.Data.Entities;
 using DadBodToGreekGod.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace DadBodToGreekGod.Services.User
 {
@@ -10,6 +11,7 @@ namespace DadBodToGreekGod.Services.User
         private readonly ApplicationDbContext _context;
         private readonly UserManager<UserEntity> _userManager;
         private readonly SignInManager<UserEntity> _signInManager;
+        private int _id;
 
         public UserService(ApplicationDbContext context,
                             UserManager<UserEntity> userManager,
@@ -20,23 +22,17 @@ namespace DadBodToGreekGod.Services.User
             _signInManager = signInManager;
         }
 
-        public async Task<UserDetail?> GetUserByIdAsync(int userId)
+        public async Task<IEnumerable<UserDetail>> GetUserByIdAsync(int id)
         {
-            UserEntity? entity = await _context.Users.FindAsync(userId);
-            if(entity is null)
-                return null;
-            
-            UserDetail detail = new UserDetail()
-            {
-                Id = entity.Id,
-                Email = entity.Email,
-                UserName = entity.UserName!,
-                FirstName = entity.FirstName,
-                LastName = entity.LastName,
-                DateCreated = entity.DateCreated
-            };
+            List<UserDetail> users = await _context.Users
+                .Where(u => u.Id == _id)
+                .Select(u => new UserDetail{
+                    Id = _id,
+                HasMadeCalendar = u.HasMadeCalendar
+                })
+                .ToListAsync();
 
-            return detail;
+            return users;
         }
 
         public async Task<bool> RegisterUserAsync(UserRegister model)
@@ -55,6 +51,7 @@ namespace DadBodToGreekGod.Services.User
 
             UserEntity entity = new UserEntity()
             {
+                HasMadeCalendar = false,
                 Email = model.Email,
                 UserName = model.UserName,
                 DateCreated = DateTime.Now
@@ -63,6 +60,24 @@ namespace DadBodToGreekGod.Services.User
             IdentityResult registerResult = await _userManager.CreateAsync(entity, model.Password);
 
             return registerResult.Succeeded;
+        }
+
+        public async Task<bool> UpdateUserAsync(UserUpdate request, int id)
+        {
+            UserEntity? entity = await _context.Users
+                .Where(u => u.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (entity == null)
+            {
+                return false;
+            }
+
+            entity.HasMadeCalendar = request.HasMadeCalendar;
+
+            int numberOfChanges = await _context.SaveChangesAsync();
+
+            return numberOfChanges == 1;
         }
 
         private async Task<bool> CheckUserNameAvailability(string userName)

@@ -12,6 +12,9 @@ namespace DadBodToGreekGod.Data.Entities
         public string? LastName { get; set; }
 
         [Required]
+        public bool HasMadeCalendar {get; set;}
+
+        [Required]
         public DateTime DateCreated { get; set; }
 
     }

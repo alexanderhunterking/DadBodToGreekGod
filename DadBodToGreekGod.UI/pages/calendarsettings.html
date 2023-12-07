@@ -137,129 +137,45 @@
 
     <div class="main-content">
       <div class="d-flex justify-content-between" id="pageTitle">
-        <h3>Calendar</h3>
-        <a class="btn btn-sm btn-primary h-100" href="./calendarsettings.html">Calendar Settings</a>
+        <h3>Calendar Settings</h3>
+       
       </div>
       <div class="containter mt-3">
         <div class="row justify-content-between">
-          <div id="1" class="col">
-           <button class="card">
-           <h5 class="card-title">Sunday</h5>
-           <p id="specialDay"></p> 
-           <div class="card-body">
-            <h6>Breakfest:</h6>
-            <p class="breakfest"></p>
-            <br>
-            <h6>Lunch:</h6>
-            <p class="lunch"></p>
-            <br>
-            <h6>Dinner:</h6>
-            <p class="dinner"></p>
-           </div>
-           </button> 
-          </div>
-          <div id="2" class="col">
-            <button class="card">
-           <h5 class="card-title">Monday</h5> 
-           <p id="specialDay"></p>
-           <div class="card-body">
-            <h6>Breakfest:</h6>
-            <p class="breakfest"></p>
-            <br>
-            <h6>Lunch:</h6>
-            <p class="lunch"></p>
-            <br>
-            <h6>Dinner:</h6>
-            <p class="dinner"></p>
-           </div> 
-           </button>  
-          </div>
-           <div id="3" class="col">
-             <button class="card">
-           <h5 class="card-title">Tuesday</h5> 
-           <p id="specialDay"></p> 
-           <div class="card-body">
-            <h6>Breakfest:</h6>
-            <p class="breakfest"></p>
-            <br>
-            <h6>Lunch:</h6>
-            <p class="lunch"></p>
-            <br>
-            <h6>Dinner:</h6>
-            <p class="dinner"></p>
-           </div>
-           </button> 
-          </div>
-           <div id="4" class="col">
-             <button class="card">
-           <h5 class="card-title">Wednesday</h5> 
-           <p id="specialDay"></p>
-           <div class="card-body">
-            <h6>Breakfest:</h6>
-            <p class="breakfest"></p>
-            <br>
-            <h6>Lunch:</h6>
-            <p class="lunch"></p>
-            <br>
-            <h6>Dinner:</h6>
-            <p class="dinner"></p>
-           </div> 
-           </button> 
-          </div>
-           <div id="5" class="col">
-             <button class="card">
-           <h5 class="card-title">Thursday</h5> 
-           <p id="specialDay"></p> 
-           <div class="card-body">
-            <h6>Breakfest:</h6>
-            <p class="breakfest"></p>
-            <br>
-            <h6>Lunch:</h6>
-            <p class="lunch"></p>
-            <br>
-            <h6>Dinner:</h6>
-            <p class="dinner"></p>
-           </div>
-           </button> 
-          </div>
-           <div id="6" class="col">
-             <button class="card">
-           <h5 class="card-title">Friday</h5> 
-           <div class="card-body">
-            <h6>Breakfest:</h6>
-            <p class="breakfest"></p>
-            <br>
-            <h6>Lunch:</h6>
-            <p class="lunch"></p>
-            <br>
-            <h6>Dinner:</h6>
-            <p class="dinner"></p>
-           </div>
-           <p id="specialDay"></p> 
-           </button> 
-          </div>
-           <div id="7" class="col">
-         <button class="card">
-           <h5 class="card-title">Saturday</h5> 
-           <div class="card-body">
-            <h6>Breakfest:</h6>
-            <p class="breakfest"></p>
-            <br>
-            <h6>Lunch:</h6>
-            <p class="lunch"></p>
-            <br>
-            <h6>Dinner:</h6>
-            <p class="dinner"></p>
-           </div>
-           <p id="specialDay"></p> 
-           </button>     
-          </div>
-        </div>
+          <form>
+            <form>
+                <label for="shoppingDay" class="form-label">Shopping Day:</label>
+                <select id="shoppingDay" class="form-select" aria-label="Select Shopping Day">
+                  <option selected>select menu</option>
+                  <option value="1">Sunday</option>
+                  <option value="2">Monday</option>
+                  <option value="3">Tuesday</option>
+                  <option value="4">Wednesday</option>
+                  <option value="5">Thursday</option>
+                  <option value="6">Friday</option>
+                  <option value="7">Saturday</option>
+                </select>
+                <br>
+            
+                <label for="cookingDay" class="form-label">Cooking Day:</label>
+                <select id="cookingDay" class="form-select" aria-label="Select Cooking Day">
+                  <option selected>select menu</option>
+                  <option value="1">Sunday</option>
+                  <option value="2">Monday</option>
+                  <option value="3">Tuesday</option>
+                  <option value="4">Wednesday</option>
+                  <option value="5">Thursday</option>
+                  <option value="6">Friday</option>
+                  <option value="7">Saturday</option>
+                </select>
+                <br>
+              <button class="btn btn-primary" id="submit">Submit</button>
+          </form>
         </div>
       </div>
     </div>
 
-    <script type="module" src="../js/calendar.js"></script>
+    <script type="module" src="../js/calendarsettings.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script

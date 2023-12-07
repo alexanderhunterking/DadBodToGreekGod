@@ -11,7 +11,7 @@
         obj[name] = value;
       }
     }
-
+    obj.hasMadeCalendar = false;
     return JSON.stringify(obj);
   }
 
