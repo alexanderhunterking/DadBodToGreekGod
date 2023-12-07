@@ -7,7 +7,6 @@
 ## Features
 
 - **Meal Planning**: Schedule your meals for the week, including breakfast, lunch, dinner, and snacks.
-- **Recipe Repository**: Access a diverse collection of recipes tailored to your dietary goals.
 - **Ingredient Management**: Keep track of ingredients, nutritional information, and create shopping lists.
 - **Calendar Integration**: Plan your meals on a weekly calendar for better organization.
 - **User Meal Assignments**: Assign meals to specific times of the day for personalized routines.
