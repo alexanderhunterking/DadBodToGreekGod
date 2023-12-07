@@ -28,7 +28,7 @@
 
 - [.NET Core SDK](https://dotnet.microsoft.com/download)
 - [Node.js](https://nodejs.org/)
-- [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) or another database of your choice
+- [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 
 ### Installation
 
